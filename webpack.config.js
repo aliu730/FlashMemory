@@ -3,7 +3,6 @@ const path = require('path');
 module.exports = {
   mode: 'development',
   entry: './client/src/index.js',
-  // resolve: { extensions: ['.js', '.jsx'] },
   output: {
     path: path.join(__dirname, './dist/public'),
     filename: 'flashBundle.js'
