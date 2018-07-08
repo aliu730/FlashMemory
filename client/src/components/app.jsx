@@ -1,5 +1,6 @@
 import Login from './login.jsx';
 import DeckSelector from './DeckSelector.jsx';
+import DeckMaker from './DeckMaker.jsx';
 
 const React = require('react');
 
@@ -16,16 +17,23 @@ class App extends React.Component {
   }
 
   loginClick() {
-    // login should be correct check TODO
+    // login should be correct check TODO.
     this.setState({
       loginDisplay: false,
     });
   }
 
   newDeckClick() {
-    this.setState({
-      newDeckTime: true,
-    });
+    const { newDeckTime } = this.state;
+    if (newDeckTime) {
+      this.setState({
+        newDeckTime: false,
+      });
+    } else {
+      this.setState({
+        newDeckTime: true,
+      });
+    }
   }
 
   render() {
@@ -44,10 +52,7 @@ class App extends React.Component {
     }
     if (newDeckTime) {
       return (
-        <div>
-          <div className="cardFront">Card Front</div>
-          <div className="cardBack">Card Back</div>
-        </div>
+        <DeckMaker showDeck={this.newDeckClick} />
       );
     }
     return (
