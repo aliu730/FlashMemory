@@ -19,6 +19,13 @@
   height: 200px;
   box-shadow: 5px 10px rgb(231, 229, 229);
 }
+#cardFill {
+  width: 500px;
+  height: 200px;
+  position: relative;
+  top: 50px;
+  left: 25%;
+}
 #deckTitle {
   position: relative;
   width: 500px;

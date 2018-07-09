@@ -10,7 +10,7 @@ class App extends React.Component {
     this.state = {
       loginDisplay: true,
       fakeDeckList: ['Math', 'Science', 'English'],
-      newDeckTime: false
+      newDeckTime: false,
     };
     this.loginClick = this.loginClick.bind(this);
     this.newDeckClick = this.newDeckClick.bind(this);
