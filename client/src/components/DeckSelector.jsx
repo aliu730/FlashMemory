@@ -1,10 +1,10 @@
 import React from 'react';
 
-const DeckSelector = (deck) => {
+const DeckSelector = ({ deck, deckSelect }) => {
   return (
     <div>
-      <select>
-        {deck.deck.map((deckEl, id) => {
+      <select onChange={deckSelect}>
+        {deck.map((deckEl, id) => {
           return (
             <option value={deckEl.title} key={id}>
               { deckEl.title }

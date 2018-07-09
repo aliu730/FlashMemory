@@ -26,11 +26,17 @@ class DeckMaker extends React.Component {
     const { cardFront } = this.state;
     const { cardBack } = this.state;
     if (typing) {
-      this.setState({
-        typing: false,
-        cardFrontFilled: cardFront,
-        cardBackFilled: cardBack,
-      });
+      if (!(cardFront === '' && cardBack === '')) {
+        this.setState({
+          typing: false,
+          cardFrontFilled: cardFront,
+          cardBackFilled: cardBack,
+        });
+      } else {
+        this.setState({
+          typing: false,
+        });
+      }
     } else {
       this.setState({
         typing: true,
@@ -88,7 +94,7 @@ class DeckMaker extends React.Component {
     if (title === '') {
       alert('Needs a title for the deck!');
     } else {
-      addDeck({ title: title, deckItem: deck });
+      addDeck({ title, deckItem: deck });
       showDeck();
     }
   }
@@ -128,10 +134,10 @@ class DeckMaker extends React.Component {
       <div className="container" >
         <div onClick={this.typeEnter} id="modalBlack" />
         <div className="row">
-          <textarea className="col-xs-5" id="cardFillFront" rows="10" cols="50" onChange={this.cardFrontText} value={cardFront} />
+          <textarea className="col-xs-5" id="cardFillFront" rows="10" cols="50" onChange={this.cardFrontText} value={cardFront} placeholder="Card Front" />
         </div>
         <div className="row">
-          <textarea className="col-xs-5" id="cardFillBack" rows="10" cols="50" onChange={this.cardBackText} value={cardBack} />
+          <textarea className="col-xs-5" id="cardFillBack" rows="10" cols="50" onChange={this.cardBackText} value={cardBack} placeholder="Card Back" />
         </div>
       </div>
     );

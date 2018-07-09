@@ -1,6 +1,7 @@
 import Login from './login.jsx';
 import DeckSelector from './DeckSelector.jsx';
 import DeckMaker from './DeckMaker.jsx';
+import DeckDisplay from './DeckDisplay.jsx';
 
 const React = require('react');
 
@@ -9,17 +10,32 @@ class App extends React.Component {
     super();
     this.state = {
       loginDisplay: true,
-      fakeDeckList: [{ title: 'math', deckItem: [] }, { title: 'science', deckItem: [] }],
+      fakeDeckList: [{ title: 'math', deckItem: [{ front: 'TEST FRONT MATH', back: 'TEST BACK MATH' }] }, { title: 'science', deckItem: [{ front: 'TEST FRONT SCI', back: 'TEST BACK SCI' }, { front: 'TEST FRONT SCI2', back: 'TEST BACK SCI2' }] }],
       newDeckTime: false,
-      deckDisplaySwitch: false,
+      deckDisplaySwitch: true,
+      currIndex: 0,
       deckOnDisplay: {
         title: 'Math',
-        deckItem: [],
+        deckItem: [{ front: 'TEST FRONT', back: 'TEST BACK' }],
       },
     };
     this.loginClick = this.loginClick.bind(this);
     this.newDeckClick = this.newDeckClick.bind(this);
     this.addDeck = this.addDeck.bind(this);
+    this.deckSelect = this.deckSelect.bind(this);
+  }
+
+  deckSelect(event) {
+    const { fakeDeckList } = this.state;
+    const currDeckTitle = event.target.value;
+    for (let i = 0; i < fakeDeckList.length; i += 1) {
+      if (currDeckTitle === fakeDeckList[i].title) {
+        this.setState({
+          currIndex: 0,
+          deckOnDisplay: fakeDeckList[i],
+        });
+      }
+    }
   }
 
   addDeck(deck) {
@@ -51,6 +67,8 @@ class App extends React.Component {
     const { loginDisplay } = this.state;
     const { fakeDeckList } = this.state;
     const { newDeckTime } = this.state;
+    const { deckDisplaySwitch } = this.state;
+    const { deckOnDisplay } = this.state;
     if (loginDisplay) {
       return (
         <div className="container">
@@ -74,12 +92,13 @@ class App extends React.Component {
             <div>
               Deck List
             </div>
-            <DeckSelector deck={fakeDeckList} />
+            <DeckSelector deckSelect={this.deckSelect} deck={fakeDeckList} />
             <button onClick={this.newDeckClick} type="button" className="newDeckButt">
               New Deck
             </button>
           </div>
         </div>
+        <DeckDisplay currIndex={this.state.currIndex} deckOnDisplay={deckOnDisplay} deckDisplaySwitch={deckDisplaySwitch} />
       </div>
     );
   }
