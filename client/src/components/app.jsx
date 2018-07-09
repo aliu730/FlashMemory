@@ -23,6 +23,8 @@ class App extends React.Component {
     this.newDeckClick = this.newDeckClick.bind(this);
     this.addDeck = this.addDeck.bind(this);
     this.deckSelect = this.deckSelect.bind(this);
+    this.nextCard = this.nextCard.bind(this);
+    this.previousCard = this.previousCard.bind(this);
   }
 
   deckSelect(event) {
@@ -35,6 +37,34 @@ class App extends React.Component {
           deckOnDisplay: fakeDeckList[i],
         });
       }
+    }
+  }
+
+  nextCard() {
+    const { currIndex, deckOnDisplay } = this.state;
+    const next = currIndex + 1;
+    if (currIndex === deckOnDisplay.deckItem.length - 1) {
+      this.setState({
+        currIndex: 0,
+      });
+    } else {
+      this.setState({
+        currIndex: next,
+      });
+    }
+  }
+
+  previousCard() {
+    const { currIndex, deckOnDisplay } = this.state;
+    const previous = currIndex - 1;
+    if (currIndex === 0) {
+      this.setState({
+        currIndex: deckOnDisplay.deckItem.length - 1,
+      });
+    } else {
+      this.setState({
+        currIndex: previous,
+      });
     }
   }
 
@@ -69,6 +99,7 @@ class App extends React.Component {
     const { newDeckTime } = this.state;
     const { deckDisplaySwitch } = this.state;
     const { deckOnDisplay } = this.state;
+    const { currIndex } = this.state;
     if (loginDisplay) {
       return (
         <div className="container">
@@ -98,7 +129,7 @@ class App extends React.Component {
             </button>
           </div>
         </div>
-        <DeckDisplay currIndex={this.state.currIndex} deckOnDisplay={deckOnDisplay} deckDisplaySwitch={deckDisplaySwitch} />
+        <DeckDisplay nextCard={this.nextCard} previousCard={this.previousCard} currIndex={currIndex} deckOnDisplay={deckOnDisplay} deckDisplaySwitch={deckDisplaySwitch} />
       </div>
     );
   }
