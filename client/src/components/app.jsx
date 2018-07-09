@@ -9,11 +9,22 @@ class App extends React.Component {
     super();
     this.state = {
       loginDisplay: true,
-      fakeDeckList: ['Math', 'Science', 'English'],
+      fakeDeckList: [{ title: 'math', deckItem: [] }, { title: 'science', deckItem: [] }],
       newDeckTime: false,
+      deckDisplaySwitch: false,
+      deckOnDisplay: {
+        title: 'Math',
+        deckItem: [],
+      },
     };
     this.loginClick = this.loginClick.bind(this);
     this.newDeckClick = this.newDeckClick.bind(this);
+    this.addDeck = this.addDeck.bind(this);
+  }
+
+  addDeck(deck) {
+    const { fakeDeckList } = this.state;
+    fakeDeckList.push(deck);
   }
 
   loginClick() {
@@ -52,7 +63,7 @@ class App extends React.Component {
     }
     if (newDeckTime) {
       return (
-        <DeckMaker showDeck={this.newDeckClick} />
+        <DeckMaker addDeck={this.addDeck} showDeck={this.newDeckClick} />
       );
     }
     return (

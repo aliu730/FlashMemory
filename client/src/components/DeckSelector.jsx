@@ -6,8 +6,8 @@ const DeckSelector = (deck) => {
       <select>
         {deck.deck.map((deckEl, id) => {
           return (
-            <option value={deckEl} key={id}>
-              { deckEl }
+            <option value={deckEl.title} key={id}>
+              { deckEl.title }
             </option>
           );
         })}

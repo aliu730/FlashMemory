@@ -12,7 +12,7 @@ const Login = ({ show, login }) => {
           <span>
             Password:
           </span>
-          <input type="text" placeholder="ex: password" />
+          <input type="password" placeholder="ex: password" />
         </div>
         <button onClick={login} type="button">
           Login

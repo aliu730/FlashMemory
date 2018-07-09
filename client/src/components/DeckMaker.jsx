@@ -14,8 +14,11 @@ class DeckMaker extends React.Component {
     };
     this.nextClick = this.nextClick.bind(this);
     this.doneClick = this.doneClick.bind(this);
+    this.cancelClick = this.cancelClick.bind(this);
     this.typeEnter = this.typeEnter.bind(this);
     this.titleChange = this.titleChange.bind(this);
+    this.cardFrontText = this.cardFrontText.bind(this);
+    this.cardBackText = this.cardBackText.bind(this);
   }
 
   typeEnter() {
@@ -37,13 +40,13 @@ class DeckMaker extends React.Component {
 
   cardFrontText(event) {
     this.setState({
-      cardFront: event.target.value
+      cardFront: event.target.value,
     });
   }
 
   cardBackText(event) {
     this.setState({
-      cardBack: event.target.value
+      cardBack: event.target.value,
     });
   }
 
@@ -72,17 +75,33 @@ class DeckMaker extends React.Component {
         cardBackFilled: 'Card Back',
       });
     } else {
+      //TODO replace alert with component.
       alert('Fill out the cards first!');
     }
   }
 
   doneClick() {
+    const { title } = this.state;
+    const { deck } = this.state;
+    const { showDeck } = this.props;
+    const { addDeck } = this.props;
+    if (title === '') {
+      alert('Needs a title for the deck!');
+    } else {
+      addDeck({ title: title, deckItem: deck });
+      showDeck();
+    }
+  }
+
+  cancelClick() {
     const { showDeck } = this.props;
     showDeck();
   }
 
   render() {
     const { typing } = this.state;
+    const { cardFront } = this.state;
+    const { cardBack } = this.state;
     const { cardFrontFilled } = this.state;
     const { cardBackFilled } = this.state;
     if (!typing) {
@@ -101,15 +120,19 @@ class DeckMaker extends React.Component {
           </div>
           <button onClick={this.nextClick} id="nextButt" type="button">Next Card</button>
           <button onClick={this.doneClick} id="doneButt" type="button">Done</button>
+          <button onClick={this.cancelClick} id="cancelButt" type="button">Cancel</button>
         </div>
       );
     }
     return (
-      <div>
-        <div onClick={this.typeEnter} id="modalBlack">
+      <div className="container" >
+        <div onClick={this.typeEnter} id="modalBlack" />
+        <div className="row">
+          <textarea className="col-xs-5" id="cardFillFront" rows="10" cols="50" onChange={this.cardFrontText} value={cardFront} />
         </div>
-        <textarea id="cardFill" rows="10" cols="50" onChange={this.cardFrontText.bind(this)} value={this.state.cardFront} />
-        <textarea id="cardFill" rows="10" cols="50" onChange={this.cardBackText.bind(this)} value={this.state.cardBack} />
+        <div className="row">
+          <textarea className="col-xs-5" id="cardFillBack" rows="10" cols="50" onChange={this.cardBackText} value={cardBack} />
+        </div>
       </div>
     );
   }
