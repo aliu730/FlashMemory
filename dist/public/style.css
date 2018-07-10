@@ -9,6 +9,7 @@
 }
 #cardFrontContent, #cardBackContent {
   text-align: center;
+  font-size: 50px;
 }
 #cardBack {
   position: relative;

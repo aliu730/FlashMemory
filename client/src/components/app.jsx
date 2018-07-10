@@ -3,21 +3,23 @@ import DeckSelector from './DeckSelector.jsx';
 import DeckMaker from './DeckMaker.jsx';
 import DeckDisplay from './DeckDisplay.jsx';
 
+const axios = require('axios');
 const React = require('react');
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      user: 'andrew456',
       loginDisplay: true,
-      fakeDeckList: [{ title: 'math', deckItem: [{ front: 'TEST FRONT MATH', back: 'TEST BACK MATH' }] }, { title: 'science', deckItem: [{ front: 'TEST FRONT SCI', back: 'TEST BACK SCI' }, { front: 'TEST FRONT SCI2', back: 'TEST BACK SCI2' }] }],
+      fakeDeckList: [{ title: 'math', deckItem: [{ front: '2%4 = ?', back: '0' }] }, { title: 'science', deckItem: [{ front: 'What is the opposite of the earth?', back: 'The Moon' }, { front: 'What are diamonds made of?', back: 'Carbon' }] }],
       newDeckTime: false,
       deckDisplaySwitch: true,
       currIndex: 0,
       face: 'front',
       deckOnDisplay: {
         title: 'Math',
-        deckItem: [{ front: 'TEST FRONT', back: 'TEST BACK' }],
+        deckItem: [{ front: '2 % 4 = ?', back: '0' }],
       },
     };
     this.loginClick = this.loginClick.bind(this);
@@ -27,6 +29,26 @@ class App extends React.Component {
     this.nextCard = this.nextCard.bind(this);
     this.previousCard = this.previousCard.bind(this);
     this.changeFace = this.changeFace.bind(this);
+  }
+
+  componentDidMount() {
+    const { user } = this.state;
+    axios({
+      method: 'GET',
+      url: `/grabData/${user}`,
+    }).then((response) => {
+      const { fakeDeckList } = this.state;
+      const newList = fakeDeckList;
+      const { data } = response;
+      for (let i = 0; i < data.length; i += 1) {
+        newList.push(data[i].decks[0]);
+      }
+      this.setState({
+        fakeDeckList: newList,
+      });
+    }).catch((err) => {
+      throw (err);
+    });
   }
 
   changeFace() {
@@ -48,6 +70,7 @@ class App extends React.Component {
     for (let i = 0; i < fakeDeckList.length; i += 1) {
       if (currDeckTitle === fakeDeckList[i].title) {
         this.setState({
+          face: 'front',
           currIndex: 0,
           deckOnDisplay: fakeDeckList[i],
         });
@@ -86,8 +109,18 @@ class App extends React.Component {
   }
 
   addDeck(deck) {
-    const { fakeDeckList } = this.state;
+    const { fakeDeckList, user } = this.state;
     fakeDeckList.push(deck);
+    axios.post('/postData', {
+      user: user,
+      deck: deck,
+    })
+    .then((response) => {
+      console.log("STORED");
+    })
+    .catch((err) => {
+      console.log("APP.jsx ERR", err);
+    })
   }
 
   loginClick() {

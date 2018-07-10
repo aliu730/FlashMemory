@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/aliu730/FlashMemory#readme",
   "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "flexboxgrid": "^6.3.1",
     "nodemon": "^1.17.5",
@@ -37,6 +39,8 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.0",
     "eslint-plugin-react": "^7.10.0",
+    "mongod": "^2.0.0",
+    "mongoose": "^5.2.2",
     "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8"
   }
