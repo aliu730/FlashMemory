@@ -79,12 +79,12 @@
   align-items: center;
 }
 .leftCard, .rightCard {
-  border-radius: 50%;
+  /* border-radius: 50%; */
   flex: 1;
-  margin: 10px;
-  border: solid 1px black;
-  width: 50px;
-  height: 100px;
+  /* margin: 10px; */
+  /* border: solid 1px black; */
+  /* width: 50px; */
+  /* height: 100px; */
   text-align: center;
   box-shadow: 5px 10px rgb(231, 229, 229);
 }

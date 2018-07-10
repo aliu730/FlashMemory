@@ -15,7 +15,7 @@ app.use((req,res,next) => {
 });
 
 app.get(`/grabData/:user`, (req, res) => {
-  db.grabData(req.params.users, function(data) {
+  db.grabData(req.params.user, function(data) {
     res.send(data);
   });
 });

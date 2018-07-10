@@ -23,7 +23,7 @@ const saveData = (user, decks) => {
 };
 
 const grabData = (user, cb) => {
-  FlashData.find( user, (err, data) => {
+  FlashData.find({ user }, (err, data) => {
     if (err) throw err;
     cb(data);
   });

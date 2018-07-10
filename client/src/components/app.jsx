@@ -10,16 +10,16 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: 'andrew456',
+      user: '',
       loginDisplay: true,
-      fakeDeckList: [{ title: 'math', deckItem: [{ front: '2%4 = ?', back: '0' }] }, { title: 'science', deckItem: [{ front: 'What is the opposite of the earth?', back: 'The Moon' }, { front: 'What are diamonds made of?', back: 'Carbon' }] }],
+      fakeDeckList: [{ title: 'math', deckItem: [{ front: '2 % 4 = ?', back: '0' }, { front: 'Is Math.random() random?', back: 'Nope' }] }, { title: 'science', deckItem: [{ front: 'What is the opposite of the earth?', back: 'The Moon' }, { front: 'What are diamonds made of?', back: 'Carbon' }] }],
       newDeckTime: false,
       deckDisplaySwitch: true,
       currIndex: 0,
       face: 'front',
       deckOnDisplay: {
         title: 'Math',
-        deckItem: [{ front: '2 % 4 = ?', back: '0' }],
+        deckItem: [{ front: '2 % 4 = ?', back: '0' }, { front: 'Is Math.random() random?', back: 'Nope' }],
       },
     };
     this.loginClick = this.loginClick.bind(this);
@@ -29,27 +29,28 @@ class App extends React.Component {
     this.nextCard = this.nextCard.bind(this);
     this.previousCard = this.previousCard.bind(this);
     this.changeFace = this.changeFace.bind(this);
+    this.loginChange = this.loginChange.bind(this);
   }
 
-  componentDidMount() {
-    const { user } = this.state;
-    axios({
-      method: 'GET',
-      url: `/grabData/${user}`,
-    }).then((response) => {
-      const { fakeDeckList } = this.state;
-      const newList = fakeDeckList;
-      const { data } = response;
-      for (let i = 0; i < data.length; i += 1) {
-        newList.push(data[i].decks[0]);
-      }
-      this.setState({
-        fakeDeckList: newList,
-      });
-    }).catch((err) => {
-      throw (err);
-    });
-  }
+  // componentDidMount() {
+  //   const { user } = this.state;
+  //   axios({
+  //     method: 'GET',
+  //     url: `/grabData/${user}`,
+  //   }).then((response) => {
+  //     const { fakeDeckList } = this.state;
+  //     const newList = fakeDeckList;
+  //     const { data } = response;
+  //     for (let i = 0; i < data.length; i += 1) {
+  //       newList.push(data[i].decks[0]);
+  //     }
+  //     this.setState({
+  //       fakeDeckList: newList,
+  //     });
+  //   }).catch((err) => {
+  //     throw (err);
+  //   });
+  // }
 
   changeFace() {
     const { face } = this.state;
@@ -103,6 +104,7 @@ class App extends React.Component {
       });
     } else {
       this.setState({
+        face: 'front',
         currIndex: previous,
       });
     }
@@ -123,10 +125,34 @@ class App extends React.Component {
     })
   }
 
+  loginChange(event) {
+    this.setState({
+      user: event.target.value,
+    });
+  }
+
   loginClick() {
     // login should be correct check TODO.
-    this.setState({
-      loginDisplay: false,
+    // this.setState({
+    //   loginDisplay: false,
+    // });
+    const { user } = this.state;
+    axios({
+      method: 'GET',
+      url: `/grabData/${user}`,
+    }).then((response) => {
+      const { fakeDeckList } = this.state;
+      const newList = fakeDeckList;
+      const { data } = response;
+      for (let i = 0; i < data.length; i += 1) {
+        newList.push(data[i].decks[0]);
+      }
+      this.setState({
+        fakeDeckList: newList,
+        loginDisplay: false,
+      });
+    }).catch((err) => {
+      throw (err);
     });
   }
 
@@ -156,7 +182,7 @@ class App extends React.Component {
     if (loginDisplay) {
       return (
         <div>
-          <Login show={loginDisplay} />
+          <Login show={loginDisplay} login={this.loginChange} />
           <div className="container-log">
             <button id="buttonLog" onClick={this.loginClick} type="button">
               Login

@@ -8,7 +8,7 @@ const Login = ({ show, login }) => {
           <span id="user">
             Username:
           </span>
-          <input id="userInput" type="text" placeholder="ex: johndoe1234" />
+          <input onChange={login} id="userInput" type="text" placeholder="ex: johndoe1234" />
           <span id="password">
             Password:
           </span>
