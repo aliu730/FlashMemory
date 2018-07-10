@@ -1,7 +1,7 @@
 import React from 'react';
 
 const DeckDisplay = (props) => {
-  const { deckDisplaySwitch } = props;
+  const { deckDisplaySwitch, changeFace, face } = props;
   const {
     deckOnDisplay,
     currIndex,
@@ -14,9 +14,9 @@ const DeckDisplay = (props) => {
         <div onClick={previousCard} className="leftCard">
           Previous
         </div>
-        <div className="cardFront-d">
+        <div onClick={changeFace} className="cardFront-d">
           <p id="cardFrontContent">
-            {deckOnDisplay.deckItem[currIndex].front}
+            {deckOnDisplay.deckItem[currIndex][face]}
           </p>
         </div>
         <div onClick={nextCard} className="rightCard">

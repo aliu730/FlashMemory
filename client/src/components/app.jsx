@@ -14,6 +14,7 @@ class App extends React.Component {
       newDeckTime: false,
       deckDisplaySwitch: true,
       currIndex: 0,
+      face: 'front',
       deckOnDisplay: {
         title: 'Math',
         deckItem: [{ front: 'TEST FRONT', back: 'TEST BACK' }],
@@ -25,6 +26,20 @@ class App extends React.Component {
     this.deckSelect = this.deckSelect.bind(this);
     this.nextCard = this.nextCard.bind(this);
     this.previousCard = this.previousCard.bind(this);
+    this.changeFace = this.changeFace.bind(this);
+  }
+
+  changeFace() {
+    const { face } = this.state;
+    if (face === 'front') {
+      this.setState({
+        face: 'back',
+      });
+    } else {
+      this.setState({
+        face: 'front',
+      });
+    }
   }
 
   deckSelect(event) {
@@ -45,10 +60,12 @@ class App extends React.Component {
     const next = currIndex + 1;
     if (currIndex === deckOnDisplay.deckItem.length - 1) {
       this.setState({
+        face: 'front',
         currIndex: 0,
       });
     } else {
       this.setState({
+        face: 'front',
         currIndex: next,
       });
     }
@@ -94,18 +111,45 @@ class App extends React.Component {
   }
 
   render() {
-    const { loginDisplay } = this.state;
-    const { fakeDeckList } = this.state;
-    const { newDeckTime } = this.state;
-    const { deckDisplaySwitch } = this.state;
-    const { deckOnDisplay } = this.state;
-    const { currIndex } = this.state;
+    const {
+      loginDisplay,
+      face,
+      fakeDeckList,
+      newDeckTime,
+      deckDisplaySwitch,
+      deckOnDisplay,
+      currIndex,
+    } = this.state;
     if (loginDisplay) {
       return (
-        <div className="container">
-          <div className="row">
-            <div className="col-xs-7" />
-            <Login show={loginDisplay} login={this.loginClick} />
+        <div>
+          <Login show={loginDisplay} />
+          <div className="container-log">
+            <button id="buttonLog" onClick={this.loginClick} type="button">
+              Login
+            </button>
+          </div>
+          <div className="container-descript">
+            <div className="col1">
+              <img className="imgTree" src="nopaper.png" ></img>
+            </div>
+            <div className="col2">
+              <img className="imgFlashcards" src="flashcards.png" ></img>
+            </div>
+            <div className="col3">
+              <img className="learn" src="learn.png"></img>
+            </div>
+          </div>
+          <div className="container-setup">
+            <div className="register">
+              Simply register a account to get started
+            </div>
+            <div className="makeDeck">
+              Make a deck to review
+            </div>
+            <div className="shareDeck">
+              Share with friends
+            </div>
           </div>
         </div>
       );
@@ -129,7 +173,7 @@ class App extends React.Component {
             </button>
           </div>
         </div>
-        <DeckDisplay nextCard={this.nextCard} previousCard={this.previousCard} currIndex={currIndex} deckOnDisplay={deckOnDisplay} deckDisplaySwitch={deckDisplaySwitch} />
+        <DeckDisplay changeFace={this.changeFace} face={face} nextCard={this.nextCard} previousCard={this.previousCard} currIndex={currIndex} deckOnDisplay={deckOnDisplay} deckDisplaySwitch={deckDisplaySwitch} />
       </div>
     );
   }

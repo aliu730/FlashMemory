@@ -37,6 +37,10 @@
   text-align: center;
   font-size: 20px;
 }
+.container-setup {
+  display: flex;
+  border: solid 1px black;
+}
 #deckTitle {
   position: relative;
   width: 500px;
@@ -59,7 +63,15 @@
   opacity: 0.5;
   background-color: black;
 }
-
+.container-login, .container-log{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
+.container-descript {
+  border: solid 1px rgb(145, 137, 137);
+  display: flex;
+}
 .container-2 {
   display: flex;
   border: solid 1px black;
@@ -83,4 +95,30 @@
   width: 500px;
   height: 200px;
   box-shadow: 5px 10px rgb(231, 229, 229);
+}
+.loginBox {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
+#user, #userInput, #password, #passwordInput{
+  flex: 1;
+}
+.col1, .col2, .col3 {
+  flex:1;
+  border: solid 1px black;
+}
+.imgTree{
+  max-width: 100%;
+  max-height: 100%;
+} 
+.imgFlashcards, .learn {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.register, .makeDeck, .shareDeck {
+  flex: 1;
+  font-size: 24px;
+  text-align: center;
 }

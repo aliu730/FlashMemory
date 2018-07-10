@@ -87,15 +87,23 @@ class DeckMaker extends React.Component {
   }
 
   doneClick() {
-    const { title } = this.state;
-    const { deck } = this.state;
+    const { title, deck, cardFrontFilled, cardBackFilled } = this.state;
     const { showDeck } = this.props;
     const { addDeck } = this.props;
     if (title === '') {
       alert('Needs a title for the deck!');
+    }
+    if ((deck.length === 0) && (cardFrontFilled === 'Card Front' && cardBackFilled === 'Card Back')) {
+      alert('Needs at least one card!');
     } else {
-      addDeck({ title, deckItem: deck });
-      showDeck();
+      if (cardFrontFilled === 'Card Front' && cardBackFilled === 'Card Back') {
+        addDeck({ title, deckItem: deck });
+        showDeck();
+      } else {
+        deck.push({ front: cardFrontFilled, back: cardBackFilled });
+        addDeck({ title, deckItem: deck });
+        showDeck();
+      }
     }
   }
 

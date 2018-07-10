@@ -3,20 +3,17 @@ import React from 'react';
 const Login = ({ show, login }) => {
   if (show) {
     return (
-      <div className="col-xs-5">
+      <div className="loginBox">
         <div className="head">
-          <span>
+          <span id="user">
             Username:
           </span>
-          <input type="text" placeholder="ex: johndoe1234" />
-          <span>
+          <input id="userInput" type="text" placeholder="ex: johndoe1234" />
+          <span id="password">
             Password:
           </span>
-          <input type="password" placeholder="ex: password" />
+          <input id="passwordInput" type="password" placeholder="ex: password" />
         </div>
-        <button onClick={login} type="button">
-          Login
-        </button>
       </div>
     );
   }
